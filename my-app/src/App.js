@@ -1,14 +1,14 @@
 import './App.css';
-import Navbar from './Components/Navbar';
-import PokeScreen from './Components/PokeScreen';
+import PokemonData from './Components/PokemonData';
+import Homepage from './Pages/Homepage';
+import Pokedex from './Pages/Pokedex';
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <section className="poke-screen__wrapper">
-        <PokeScreen />
-      </section>
+      <PokemonData />
+      {/* <Homepage /> */}
+      {/* <Pokedex /> */}
     </div>
   );
 }
