@@ -1,14 +1,14 @@
 import './App.css';
-import PokemonData from './Components/PokemonData';
 import Homepage from './Pages/Homepage';
 import Pokedex from './Pages/Pokedex';
-
+import { useState } from 'react';
 function App() {
+  const [currentPage, setCurrentPage] = useState('home');
+
   return (
     <div className="App">
-      <PokemonData />
-      {/* <Homepage /> */}
-      {/* <Pokedex /> */}
+      {currentPage === 'home' && <Homepage goToPokedex={() => setCurrentPage('pokedex')} />}
+      {currentPage === 'pokedex' && <Pokedex />}
     </div>
   );
 }

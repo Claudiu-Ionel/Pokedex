@@ -1,10 +1,13 @@
 import React from 'react';
+import Navbar from '../Components/Navbar';
+import PokemonData from '../Components/PokemonData';
 
-function Homepage() {
+function Homepage({ goToPokedex }) {
   return (
-    <div>
-      <div></div>
-    </div>
+    <>
+      <Navbar />
+      <PokemonData goToPokedex={goToPokedex} />
+    </>
   );
 }
 

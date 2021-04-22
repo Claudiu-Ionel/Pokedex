@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import classNamesHelper from 'classnames';
-function PokemonData() {
+function PokemonData({ goToPokedex }) {
   const [pokemonList, getPokemon] = useState([]);
 
   useEffect(() => {
@@ -19,12 +19,12 @@ function PokemonData() {
     }
     getPokemon(pokeList);
 
-    let pokeTypesAll = pokeList.map((item) => {
-      return item.types[0].type.name;
-    });
-    console.log(pokeTypesAll);
-    let uniqueChars = [...new Set(pokeTypesAll)];
-    console.log(uniqueChars);
+    // let pokeTypesAll = pokeList.map((item) => {
+    //   return item.types[0].type.name;
+    // });
+    // console.log(pokeTypesAll);
+    // let uniqueChars = [...new Set(pokeTypesAll)];
+    // console.log(uniqueChars);
   };
   return (
     <div className="pokemonList">
@@ -36,6 +36,7 @@ function PokemonData() {
               item.types[0].type.name && `${item.types[0].type.name}`,
             )}
             key={item.id}
+            onClick={goToPokedex}
           >
             <img
               className="pokemon-img"
