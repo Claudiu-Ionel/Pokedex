@@ -16,7 +16,7 @@ const Input = () => {
     <div className="searchArea">
       <label htmlFor="pokemonSearch">Search: </label>
       <input type="text" id="pokemonSearch" />
-      <button>Catch em all!</button>
+      <button>Search</button>
     </div>
   );
 };
