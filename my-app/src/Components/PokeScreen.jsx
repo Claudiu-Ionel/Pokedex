@@ -1,24 +1,43 @@
 import ColoredLed from './ColoredLeds';
 import Bars from './Bars';
-import Navbar from '../Components/Navbar';
+import Navbar from '../Components/Navbar/Navbar';
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
+import SkillBar from 'react-skillbars';
+
 const PokeScreen = ({ match }) => {
   const [pokemon, setItem] = useState({});
   const [loading, setLoading] = useState(true);
-  //Look at this console
-  // console.log(match)
-
+  const [pokemonStats, setStats] = useState([]);
+  console.log(pokemonStats);
+  const [barSkills, setBarSkills] = useState(null);
   useEffect(() => {
     const fetchSpecificItem = async () => {
       const fetchItem = await fetch(`https://pokeapi.co/api/v2/pokemon/${match.params.id}`);
       const item = await fetchItem.json();
       setItem(item);
+      setStats(item.stats);
       setLoading(false);
     };
     fetchSpecificItem();
   }, [match.params.id]);
+
+  useEffect(() => {
+    const skills = [];
+    const setSkills = () => {
+      pokemonStats.forEach((item) => {
+        skills.push({ type: item.stat.name, level: item.base_stat });
+      });
+    };
+    setSkills();
+    if (!loading) {
+      setBarSkills(skills);
+    }
+    return function cleanup() {
+      setBarSkills(skills);
+    };
+  }, [loading, pokemonStats]);
   console.log(pokemon);
 
   if (loading) {
@@ -91,8 +110,17 @@ const PokeScreen = ({ match }) => {
           </div>
         </section>
         <section className="stats-wrapper">
-          <h1>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h1>
-          <h1>weight: {parseInt(pokemon.weight) / 10} kg </h1>
+          <h1 className="pokeScreen-name">
+            {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+          </h1>
+          <h1 className="pokeScreen-exp">Base Experience: {pokemon.base_experience}</h1>
+          <h1 className="pokeScreen-height">
+            {'Height ' + (parseInt(pokemon.height) / 10).toFixed(1) + 'm'}
+          </h1>
+          <h1 className="pokeScreen-weight">Weight: {parseInt(pokemon.weight) / 10} kg </h1>
+          <div className="skill-bars-wrapper">
+            <SkillBar skills={barSkills} />
+          </div>
         </section>
       </div>
     </>

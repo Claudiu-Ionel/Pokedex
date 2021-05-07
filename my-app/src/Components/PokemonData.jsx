@@ -1,101 +1,69 @@
-import React from 'react';
-import axios from 'axios';
 import { useState, useEffect } from 'react';
-import classNamesHelper from 'classnames';
+import { useGlobalState } from '../App';
+
 import { Link } from 'react-router-dom';
-import Navbar from './Navbar';
+
+import Navbar from './Navbar/Navbar';
+import PokemonCard from './PokemonCard/PokemonCard';
+import useFetchData from '../hooks/useFetchData';
 
 function PokemonData() {
-  // const [pokemon, getPokemon] = useState([]);
-  const [pokemonList, setPokemonList] = useState([]);
-  // const [index, setIndex] = useState(1);
-  const [isLoading, setLoading] = useState(true);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${index}`);
-  //       const data = await response.data;
-  //       getPokemon(data);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [index]);
+  const globalState = useGlobalState();
+
+  const globalPokemons = globalState.pokemonDataPage;
+
+  const setGlobalPokemons = globalState.setPokemonDataPage;
+
+  const hasAlreadyLoadedPokemons = Boolean(globalPokemons);
+
+  const [localPokemons, setLocalPokemons] = useState(globalPokemons);
+
+  console.log(hasAlreadyLoadedPokemons);
+  // console.log('globalPokemons is ', globalPokemons);
+
+  // console.log('localPokemons ', localPokemons);
+
+  const { isLoading, hasError, data, nextPokemons, info, refetch } = useFetchData({
+    url: 'https://pokeapi.co/api/v2/pokemon/',
+    disable: hasAlreadyLoadedPokemons,
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=5');
-        const data = await response.data;
-        const results = await data.results;
-        const pokeArray = [];
-        results.map(async (element) => {
-          try {
-            console.log('in try', element);
-            const response = await axios.get(element.url);
-            console.log(response);
-            const data = await response.data;
-            pokeArray.push(data);
-          } catch (error) {
-            setLoading(false);
-            console.log(error);
-          }
-        });
-        setLoading(false);
-        setPokemonList(pokeArray);
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
+    if (data && hasAlreadyLoadedPokemons) {
+      const updatedData = [...localPokemons, ...data];
+      // console.log('localPokemons', localPokemons);
+      setLocalPokemons(updatedData);
+      setGlobalPokemons(updatedData);
+    } else if (data) {
+      setLocalPokemons(data);
+      setGlobalPokemons(data);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   if (isLoading) {
-    console.log('loading');
-    console.log(pokemonList);
+    return 'Loading...';
   }
-  // if (!isLoading) {
-  //   console.log('done loading');
-  //   console.log(pokemonList);
-  // }
+  if (hasError) {
+    return hasError;
+  }
   return (
     <>
       <Navbar />
       <div className="pokemonList">
-        {pokemonList.map((item) => {
-          // console.log(`item is`, item);
+        {globalPokemons.map((item, index) => (
           <Link
             to={`${item.id}`}
             key={item.id}
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
-            <div
-              className={classNamesHelper(
-                'pokemon-card',
-                item.types[0].type.name && `${item.types[0].type.name}`,
-              )}
-              key={item.id}
-            >
-              <div className="pokemon-id">#{item.id}</div>
-              <div className="pokemon-img-wrapper">
-                <img
-                  className="pokemon-img"
-                  src={item.sprites.other['official-artwork']['front_default']}
-                  alt=""
-                />
-              </div>
-
-              <div className="pokemon-name">
-                {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
-              </div>
-              <div>Type: {item.types[0].type.name}</div>
-            </div>
-          </Link>;
-        })}
+            <PokemonCard item={item} style={{ animationDelay: `${index * 0.01}s` }} />
+          </Link>
+        ))}
       </div>
+      <button style={{ padding: `10px` }} onClick={() => refetch(nextPokemons)}>
+        Load More
+      </button>
     </>
   );
 }
