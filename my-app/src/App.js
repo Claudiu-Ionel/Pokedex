@@ -5,6 +5,7 @@ import './App.css';
 import { createContext, useContext, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PokemonData from './Components/PokemonData';
+import PokemonData2 from './Components/PokemonData2';
 import PokeScreen from './Components/PokeScreen';
 
 export const AppContext = createContext();

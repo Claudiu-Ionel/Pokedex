@@ -22,8 +22,8 @@ export default function useFetchData({ url, options = { disable: false } }) {
         return Promise.all(results.map((res) => axios.get(res.url)));
       })
       .then((results) => {
-        setIsLoading(false);
         setData(results.map((res) => res.data));
+        setIsLoading(false);
       }).catch(function (error) {
         setIsLoading(false);
         setHasError(error);
@@ -50,3 +50,45 @@ export default function useFetchData({ url, options = { disable: false } }) {
   }
 
 }
+
+// const fetchData = useCallback(function fetchData(endpoint) {
+  //   axios
+  //     .get(endpoint)
+  //     .then((res) => {
+  //       // setInfo(res.data.next)
+  //       // setNextPokemons(res.data.next);
+  //       return {
+  //         info: res.data.next,
+  //         results: res.data.results
+  //       };
+  //     })
+  //     .then((results) => {
+  //       // console.log(results);
+  //       const next = results.info;
+  //       const result = []
+  //       const fetchedResults = () => {
+
+  //         results.results.map(async (res) => {
+
+  //           const apiCallResponse = await axios.get(res.url)
+  //           result.push(apiCallResponse.data)
+  //         });
+  //       }
+  //       fetchedResults();
+
+  //       const dataAll = {
+  //         info: next,
+  //         results: result
+  //       }
+  //       return dataAll;
+  //     })
+  //     .then((results) => {
+  //       console.log(results);
+  //       setData(results);
+  //       setIsLoading(false);
+  //     }).catch(function (error) {
+  //       setIsLoading(false);
+  //       setHasError(error);
+  //     });
+
+  // }, []);

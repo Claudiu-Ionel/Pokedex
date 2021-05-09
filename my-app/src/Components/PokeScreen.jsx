@@ -18,6 +18,7 @@ const PokeScreen = ({ match }) => {
       const item = await fetchItem.json();
       setItem(item);
       setStats(item.stats);
+      console.log(item.stats);
       setLoading(false);
     };
     fetchSpecificItem();

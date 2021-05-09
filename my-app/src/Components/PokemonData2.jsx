@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 
 import Navbar from './Navbar/Navbar';
 import PokemonCard from './PokemonCard/PokemonCard';
-import useFetchData from '../hooks/useFetchData';
-// import useFetchData2 from '../hooks/useFetchData2';
+// import useFetchData from '../hooks/useFetchData';
+import useFetchData2 from '../hooks/useFetchData2';
 
 function PokemonData() {
   const globalState = useGlobalState();
@@ -19,63 +19,60 @@ function PokemonData() {
 
   const [localPokemons, setLocalPokemons] = useState(globalPokemons);
 
-  console.log('check if it has data', hasAlreadyLoadedPokemons);
+  // console.log(hasAlreadyLoadedPokemons);
   // console.log('globalPokemons is ', globalPokemons);
 
   // console.log('localPokemons ', localPokemons);
 
-  const { isLoading, hasError, data, nextPokemons, info, refetch } = useFetchData({
-    url: 'https://pokeapi.co/api/v2/pokemon/',
-    disable: hasAlreadyLoadedPokemons,
-  });
-  // const { isLoading, hasError, fetchedData, refetch } = useFetchData2({
+  // const { isLoading, hasError, data, nextPokemons, info, refetch } = useFetchData({
   //   url: 'https://pokeapi.co/api/v2/pokemon/',
   //   disable: hasAlreadyLoadedPokemons,
   // });
-  // console.log(data);
-  // useEffect(() => {
-  //   if (fetchedData && hasAlreadyLoadedPokemons) {
-  //     const updatedData = {
-  //       info: fetchedData.next,
-  //       results: [...localPokemons.results, ...fetchedData.results],
-  //     };
-  //     setLocalPokemons(updatedData);
-  //     setGlobalPokemons(updatedData);
-  //   } else if (fetchedData) {
-  //     setLocalPokemons(fetchedData);
-  //     setGlobalPokemons(fetchedData);
-  //   }
-  // }, []);
+  const { isLoading, hasError, fetchedData, refetch } = useFetchData2({
+    url: 'https://pokeapi.co/api/v2/pokemon/',
+    disable: hasAlreadyLoadedPokemons,
+  });
 
-  // console.log(fetchedData);
   useEffect(() => {
-    if (data && hasAlreadyLoadedPokemons) {
-      const updatedData = [...localPokemons, ...data];
-
+    if (fetchedData && hasAlreadyLoadedPokemons) {
+      const updatedData = {
+        info: fetchedData.next,
+        results: [...localPokemons.results, ...fetchedData.results],
+      };
       setLocalPokemons(updatedData);
       setGlobalPokemons(updatedData);
-    } else if (data) {
-      setLocalPokemons(data);
-      setGlobalPokemons(data);
+    } else if (fetchedData) {
+      setLocalPokemons(fetchedData);
+      setGlobalPokemons(fetchedData);
     }
-  }, [data]);
+  }, []);
 
   // console.log(fetchedData);
+  // useEffect(() => {
+  //   if (data && hasAlreadyLoadedPokemons) {
+  //     const updatedData = [...localPokemons, ...data];
 
+  //     setLocalPokemons(updatedData);
+  //     setGlobalPokemons(updatedData);
+  //   } else if (data) {
+  //     setLocalPokemons(data);
+  //     setGlobalPokemons(data);
+  //   }
+  // }, [data]);
+
+  // console.log(fetchedData);
+  console.log(fetchedData);
   if (isLoading) {
     return 'Loading...';
   }
   if (hasError) {
     return hasError;
   }
-  if (data?.length === 0) {
-    return <h2>Sorry empty array</h2>;
-  }
   return (
     <>
       <Navbar />
       <div className="pokemonList">
-        {localPokemons.map((item, index) => {
+        {localPokemons.results.map((item, index) => {
           return (
             <Link
               to={`${item.id}`}
@@ -87,10 +84,7 @@ function PokemonData() {
           );
         })}
       </div>
-      <button
-        style={{ padding: `10px`, marginBottom: '20px' }}
-        onClick={() => refetch(nextPokemons)}
-      >
+      <button style={{ padding: `10px` }} onClick={() => refetch()}>
         Load More
       </button>
     </>
