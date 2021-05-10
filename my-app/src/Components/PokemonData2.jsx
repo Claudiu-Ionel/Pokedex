@@ -28,25 +28,28 @@ function PokemonData() {
   //   url: 'https://pokeapi.co/api/v2/pokemon/',
   //   disable: hasAlreadyLoadedPokemons,
   // });
-  const { isLoading, hasError, fetchedData, refetch } = useFetchData2({
+  const { isLoading, hasError, data, refetch } = useFetchData2({
     url: 'https://pokeapi.co/api/v2/pokemon/',
-    disable: hasAlreadyLoadedPokemons,
+    options: { disable: hasAlreadyLoadedPokemons },
   });
-
+  // console.log(hasAlreadyLoadedPokemons);
   useEffect(() => {
-    if (fetchedData && hasAlreadyLoadedPokemons) {
+    if (data && hasAlreadyLoadedPokemons) {
       const updatedData = {
-        info: fetchedData.next,
-        results: [...localPokemons.results, ...fetchedData.results],
+        next: data.next,
+        results: [...localPokemons.results, ...data.results],
       };
       setLocalPokemons(updatedData);
       setGlobalPokemons(updatedData);
-    } else if (fetchedData) {
-      setLocalPokemons(fetchedData);
-      setGlobalPokemons(fetchedData);
+    } else if (data) {
+      setLocalPokemons(data);
+      setGlobalPokemons(data);
     }
-  }, []);
+  }, [data]);
 
+  console.log(data);
+  // console.log(localPokemons);
+  // console.log(localPokemons);
   // console.log(fetchedData);
   // useEffect(() => {
   //   if (data && hasAlreadyLoadedPokemons) {
@@ -61,12 +64,13 @@ function PokemonData() {
   // }, [data]);
 
   // console.log(fetchedData);
-  console.log(fetchedData);
+  // console.log(fetchedData);
+  // console.log(fetchedData);
   if (isLoading) {
     return 'Loading...';
   }
   if (hasError) {
-    return hasError;
+    console.log(hasError);
   }
   return (
     <>
@@ -79,12 +83,12 @@ function PokemonData() {
               key={item.id}
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
-              <PokemonCard item={item} style={{ animationDelay: `${index * 0.01}s` }} />
+              <PokemonCard item={item} style={{ animationDelay: `${index * 0.001}s` }} />
             </Link>
           );
         })}
       </div>
-      <button style={{ padding: `10px` }} onClick={() => refetch()}>
+      <button style={{ padding: `10px` }} onClick={() => refetch(localPokemons.next)}>
         Load More
       </button>
     </>

@@ -29,7 +29,7 @@ function App() {
       <AppContext.Provider value={globalState}>
         <Router>
           <Switch>
-            <Route exact path="/" component={PokemonData} />
+            <Route exact path="/" component={PokemonData2} />
             <Route exact path="/:id" component={PokeScreen} />
           </Switch>
         </Router>

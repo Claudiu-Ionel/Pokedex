@@ -27,8 +27,8 @@ const PokeScreen = ({ match }) => {
   useEffect(() => {
     const skills = [];
     const setSkills = () => {
-      pokemonStats.forEach((item) => {
-        skills.push({ type: item.stat.name, level: item.base_stat });
+      pokemonStats.map((item) => {
+        return skills.push({ type: item.stat.name, level: item.base_stat });
       });
     };
     setSkills();
