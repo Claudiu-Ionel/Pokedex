@@ -3,9 +3,9 @@ import { useGlobalState } from '../App';
 
 import { Link } from 'react-router-dom';
 
-import Navbar from './Navbar/Navbar';
-import PokemonCard from './PokemonCard/PokemonCard';
-import useFetchData from '../hooks/useFetchData';
+// import Navbar from './SearchBar/Navbar';
+import PokemonCard from '../Components/PokemonCard/PokemonCard';
+import useFetchData from './useFetchData';
 // import useFetchData2 from '../hooks/useFetchData2';
 
 function PokemonData() {
@@ -18,11 +18,6 @@ function PokemonData() {
   const hasAlreadyLoadedPokemons = Boolean(globalPokemons);
 
   const [localPokemons, setLocalPokemons] = useState(globalPokemons);
-
-  // console.log('check if it has data', hasAlreadyLoadedPokemons);
-  // console.log('globalPokemons is ', globalPokemons);
-
-  // console.log('localPokemons ', localPokemons);
 
   const { isLoading, hasError, data, refetch } = useFetchData({
     url: 'https://pokeapi.co/api/v2/pokemon/',
@@ -43,6 +38,7 @@ function PokemonData() {
       setLocalPokemons(data);
       setGlobalPokemons(data);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data.results]);
 
   console.log(localPokemons);
@@ -55,7 +51,7 @@ function PokemonData() {
   }
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="pokemonList">
         {localPokemons?.results.map((item, index) => {
           return (

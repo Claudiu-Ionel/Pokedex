@@ -17,14 +17,14 @@ export default function useFetchData({ url, options = { disable: false } }) {
       const firstApiCall = await axios.get(endpoint)
       // console.log(firstApiCall);
       const nextApiCall = firstApiCall.data.next;
-      console.log(nextApiCall);
+      // console.log(nextApiCall);
       const firstApiCallResult = firstApiCall.data.results;
       // console.log(firstApiCallResult);
       const secondApiCallUrls = await Promise.all(
         firstApiCallResult.map((res) => axios.get(res.url))
       )
       const secondApiCallResults = secondApiCallUrls.map((item) => item.data)
-      console.log(secondApiCallResults);
+      // console.log(secondApiCallResults);
       setData({
         next: nextApiCall,
         results: secondApiCallResults,
@@ -36,7 +36,7 @@ export default function useFetchData({ url, options = { disable: false } }) {
     }
 
   }, []);
-  console.log(data);
+  // console.log(data);
   useEffect(() => {
     if (!isDisabled) {
       fetchData(url)

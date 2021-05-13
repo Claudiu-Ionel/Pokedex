@@ -1,0 +1,50 @@
+.skill-bars {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-bar-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0px;
+}
+
+.skill-bar-name {
+  width: 125px;
+  text-align: center;
+  padding: 5px 5px;
+  background-color: rgb(255, 166, 0);
+}
+.skill-bar-body {
+  position: relative;
+  width: 85%;
+  background-color: rgb(193, 193, 193);
+  opacity: 0.5;
+  z-index: 0;
+}
+.skill-bar-body-fil {
+  display: block;
+  position: absolute;
+  left: 0;
+  height: 100% !important;
+
+  background-color: rgba(255, 166, 0, 1);
+  opacity: 1;
+  z-index: 2;
+}
+.skill-bar-body-stat {
+  position: absolute;
+  right: 20px;
+  height: 100%;
+  color: black;
+  z-index: 4;
+}
+.skill-bar-body-stat span {
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,54 +1,47 @@
 import ColoredLed from './ColoredLeds';
 import Bars from './Bars';
-import Navbar from '../Components/Navbar/Navbar';
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
-import SkillBar from 'react-skillbars';
+import Skillbar from './Skillbars/Skillbar';
+import axios from 'axios';
 
 const PokeScreen = ({ match }) => {
-  const [pokemon, setItem] = useState({});
+  const [pokemon, setPokemon] = useState({});
   const [loading, setLoading] = useState(true);
-  const [pokemonStats, setStats] = useState([]);
-  console.log(pokemonStats);
-  const [barSkills, setBarSkills] = useState(null);
+  const [pokemonDescription, setPokemonDescription] = useState('');
+  const [barSkills, setBarSkills] = useState('');
+
   useEffect(() => {
     const fetchSpecificItem = async () => {
-      const fetchItem = await fetch(`https://pokeapi.co/api/v2/pokemon/${match.params.id}`);
-      const item = await fetchItem.json();
-      setItem(item);
-      setStats(item.stats);
-      console.log(item.stats);
+      const fetchItem = await axios.get(`https://pokeapi.co/api/v2/pokemon/${match.params.id}`);
+      const item = await fetchItem.data;
+
+      const speciesFetch = await axios.get(item.species.url);
+      const speciesData = speciesFetch.data;
+      const description = speciesData.flavor_text_entries[9].flavor_text;
+      const itemStats = item.stats;
+
+      const skills = itemStats.map((item) => {
+        return { type: item.stat.name, level: item.base_stat };
+      });
+      setPokemonDescription(description);
+      setPokemon(item);
+      setBarSkills(skills);
       setLoading(false);
     };
     fetchSpecificItem();
   }, [match.params.id]);
-
-  useEffect(() => {
-    const skills = [];
-    const setSkills = () => {
-      pokemonStats.map((item) => {
-        return skills.push({ type: item.stat.name, level: item.base_stat });
-      });
-    };
-    setSkills();
-    if (!loading) {
-      setBarSkills(skills);
-    }
-    return function cleanup() {
-      setBarSkills(skills);
-    };
-  }, [loading, pokemonStats]);
-  console.log(pokemon);
 
   if (loading) {
     return 'Loading...';
   }
   return (
     <>
-      <Navbar />
-      <Link to="/">To HomePage</Link>
       <div className="poke-screen__wrapper">
+        <Link to="/" className="to-home-page">
+          <button>To Home Page</button>
+        </Link>
         <section className="screen-wrapper">
           <div className="screen-leds">
             <ColoredLed
@@ -72,7 +65,7 @@ const PokeScreen = ({ match }) => {
             <ColoredLed
               w="80px"
               h="80px"
-              bcolor="#10ABED"
+              bcolor="#1198D1"
               border="2px solid #fff"
               radius="50%"
               margin=""
@@ -114,13 +107,16 @@ const PokeScreen = ({ match }) => {
           <h1 className="pokeScreen-name">
             {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
           </h1>
-          <h1 className="pokeScreen-exp">Base Experience: {pokemon.base_experience}</h1>
-          <h1 className="pokeScreen-height">
+          <h3 className="pokemonScreen-description">{pokemonDescription}</h3>
+          <h3 className="pokeScreen-exp">Base Experience: {pokemon.base_experience}</h3>
+          <h3 className="pokeScreen-height">
             {'Height ' + (parseInt(pokemon.height) / 10).toFixed(1) + 'm'}
-          </h1>
-          <h1 className="pokeScreen-weight">Weight: {parseInt(pokemon.weight) / 10} kg </h1>
-          <div className="skill-bars-wrapper">
-            <SkillBar skills={barSkills} />
+          </h3>
+          <h3 className="pokeScreen-weight">Weight: {parseInt(pokemon.weight) / 10} kg </h3>
+          <div className="skill-bars">
+            {barSkills.map((item, index) => {
+              return <Skillbar key={index} name={item.type} level={item.level} />;
+            })}
           </div>
         </section>
       </div>

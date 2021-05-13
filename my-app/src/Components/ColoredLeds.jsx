@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 const ColoredLed = ({ w, h, bcolor, border, radius, margin }) => {
   return (
@@ -16,3 +16,12 @@ const ColoredLed = ({ w, h, bcolor, border, radius, margin }) => {
 };
 
 export default ColoredLed;
+
+ColoredLed.propTypes = {
+  w: PropTypes.string,
+  h: PropTypes.string,
+  bcolor: PropTypes.string,
+  border: PropTypes.string,
+  radius: PropTypes.string,
+  margin: PropTypes.string,
+};

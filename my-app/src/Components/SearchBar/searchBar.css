@@ -1,0 +1,45 @@
+.search-bar-wrapper {
+  width: 100vw;
+  height: 60px;
+  padding: 30px 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid black;
+}
+.logo {
+  position: absolute;
+  left: 20px;
+}
+.searchArea {
+  display: flex;
+  align-items: center;
+}
+
+.searchArea label {
+  margin-right: 5px;
+  color: #fff;
+}
+.searchArea input {
+  height: 30px;
+  width: 250px;
+  font-size: large;
+}
+.searchArea button {
+  height: 30px;
+  margin: 5px;
+  padding: 5px;
+}
+.pokeButton {
+  margin: 5px;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.pokeButton img {
+  width: 100%;
+  height: auto;
+}

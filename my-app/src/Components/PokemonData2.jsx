@@ -3,36 +3,24 @@ import { useGlobalState } from '../App';
 
 import { Link } from 'react-router-dom';
 
-import Navbar from './Navbar/Navbar';
+import SearchBar from './SearchBar/SearchBar';
 import PokemonCard from './PokemonCard/PokemonCard';
 // import useFetchData from '../hooks/useFetchData';
 import useFetchData2 from '../hooks/useFetchData2';
 
 function PokemonData() {
   const globalState = useGlobalState();
-
   const globalPokemons = globalState.pokemonDataPage;
-
   const setGlobalPokemons = globalState.setPokemonDataPage;
-
   const hasAlreadyLoadedPokemons = Boolean(globalPokemons);
-
   const [localPokemons, setLocalPokemons] = useState(globalPokemons);
-
-  // console.log(hasAlreadyLoadedPokemons);
-  // console.log('globalPokemons is ', globalPokemons);
-
-  // console.log('localPokemons ', localPokemons);
-
-  // const { isLoading, hasError, data, nextPokemons, info, refetch } = useFetchData({
-  //   url: 'https://pokeapi.co/api/v2/pokemon/',
-  //   disable: hasAlreadyLoadedPokemons,
-  // });
+  const [search, setSearch] = useState('');
+  const [filteredPokemons, setFilteredPokemons] = useState([]);
   const { isLoading, hasError, data, refetch } = useFetchData2({
     url: 'https://pokeapi.co/api/v2/pokemon/',
     options: { disable: hasAlreadyLoadedPokemons },
   });
-  // console.log(hasAlreadyLoadedPokemons);
+
   useEffect(() => {
     if (data && hasAlreadyLoadedPokemons) {
       const updatedData = {
@@ -45,27 +33,36 @@ function PokemonData() {
       setLocalPokemons(data);
       setGlobalPokemons(data);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  console.log(data);
-  // console.log(localPokemons);
-  // console.log(localPokemons);
-  // console.log(fetchedData);
-  // useEffect(() => {
-  //   if (data && hasAlreadyLoadedPokemons) {
-  //     const updatedData = [...localPokemons, ...data];
+  useEffect(() => {
+    setFilteredPokemons(
+      localPokemons?.results.filter((item) => {
+        return item.name.toLowerCase().includes(search.toLowerCase());
+      }),
+    );
+  }, [search, localPokemons?.results]);
 
-  //     setLocalPokemons(updatedData);
-  //     setGlobalPokemons(updatedData);
-  //   } else if (data) {
-  //     setLocalPokemons(data);
-  //     setGlobalPokemons(data);
-  //   }
-  // }, [data]);
+  const onChange = (event) => {
+    event.preventDefault();
+    setSearch(event.target.value);
+  };
 
-  // console.log(fetchedData);
-  // console.log(fetchedData);
-  // console.log(fetchedData);
+  // use this to make the submit button to work. Ps don't forget to make it visible
+  // const onSubmit = (event) => {
+  //   event.preventDefault();
+  //   const formData = new FormData(event.target);
+  //   const searchValue = formData.get('search');
+  //   setSearch(searchValue);
+  // };
+
+  // This is a another way to filter instead of using the useEffect()
+
+  // const filteredPokemons = localPokemons?.results.filter((item) => {
+  //   return item.name.toLowerCase().includes(search.toLowerCase());
+  // });
+
   if (isLoading) {
     return 'Loading...';
   }
@@ -74,9 +71,9 @@ function PokemonData() {
   }
   return (
     <>
-      <Navbar />
+      <SearchBar onChange={onChange} />
       <div className="pokemonList">
-        {localPokemons.results.map((item, index) => {
+        {filteredPokemons?.map((item, index) => {
           return (
             <Link
               to={`${item.id}`}

@@ -1,4 +1,4 @@
-import PokeButton from './PokeButton';
+import PokeButton from '../Components/PokeButton';
 import Pokeball from './img/pokeball.png';
 import OpenPokeball from './img/open-pokeball.png';
 import classNamesHelper from 'classnames';

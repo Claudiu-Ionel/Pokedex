@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import classNamesHelper from 'classnames';
 import './PokemonCard.css';
 
@@ -26,3 +26,8 @@ export default function PokemonCard({ item, style }) {
     </div>
   );
 }
+
+PokemonCard.propTypes = {
+  item: PropTypes.object,
+  style: PropTypes.object,
+};
