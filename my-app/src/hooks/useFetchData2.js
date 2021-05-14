@@ -46,10 +46,6 @@ export default function useFetchData({ url, options = { disable: false } }) {
   }, [fetchData, isDisabled, url])
 
   return {
-    // fetchedData: {
-    //   next: next,
-    //   results: data,
-    // },
     data: data,
     isLoading: isLoading,
     hasError: hasError,
@@ -57,9 +53,3 @@ export default function useFetchData({ url, options = { disable: false } }) {
   }
 
 }
-
-// console.log(secondApiCallResult);
-      // setData(secondApiCallResult.map((res) => res.data))
-
-      // Promise.all(url.map(item => axios.get(item)
-      //   .then(res => results.push(res.data)).catch((ex) => ex)))

@@ -5,8 +5,8 @@ import './App.css';
 import { createContext, useContext, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import PokemonData2 from './Components/PokemonData2';
-import PokeScreen from './Components/PokeScreen';
+import Homepage from './Pages/Homepage';
+import PokeDex from './Pages/PokeDex';
 
 export const AppContext = createContext();
 
@@ -29,8 +29,8 @@ function App() {
       <AppContext.Provider value={globalState}>
         <Router>
           <Switch>
-            <Route exact path="/" component={PokemonData2} />
-            <Route exact path="/:id" component={PokeScreen} />
+            <Route exact path="/" component={Homepage} />
+            <Route exact path="/:id" component={PokeDex} />
           </Switch>
         </Router>
       </AppContext.Provider>
