@@ -1,15 +1,14 @@
 import ColoredLed from './PokeDexDesignComponents/ColoredLeds';
 import Bars from './PokeDexDesignComponents/Bars';
 import React, { useEffect, useState } from 'react';
-// import '../App.css';
 import './PokeDex.css';
 import SurprisedPikachu from '../Components/img/surprised_pikachu.jpg';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Skillbar from '../Components/Skillbars/Skillbar';
 import axios from 'axios';
 import IsLoading from '../Components/IsLoading/IsLoading';
 
-const PokeScreen = ({ match }) => {
+const PokeScreen = ({ match, history }) => {
   const [pokemon, setPokemon] = useState({});
   const [loading, setLoading] = useState(true);
   const [pokemonDescription, setPokemonDescription] = useState('');
@@ -42,9 +41,9 @@ const PokeScreen = ({ match }) => {
   return (
     <>
       <div className="poke-screen__wrapper">
-        <Link to="/" className="to-home-page">
-          <button>To Home Page</button>
-        </Link>
+        <button onClick={() => history.goBack()} className="to-home-page">
+          To Home Page
+        </button>
         <section className="screen-wrapper">
           <div className="screen-leds">
             <ColoredLed
@@ -127,4 +126,4 @@ const PokeScreen = ({ match }) => {
   );
 };
 
-export default PokeScreen;
+export default withRouter(PokeScreen);
