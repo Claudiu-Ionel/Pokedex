@@ -1,11 +1,14 @@
-import ColoredLed from './PokeDexDesignComponents/ColoredLeds';
-import Bars from './PokeDexDesignComponents/Bars';
 import React, { useEffect, useState } from 'react';
 import './PokeDex.css';
-import SurprisedPikachu from '../Components/img/surprised_pikachu.jpg';
+
 import { withRouter } from 'react-router-dom';
 import Skillbar from '../Components/Skillbars/Skillbar';
 import axios from 'axios';
+
+import TypeTag from '../Components/TypeTag/TypeTag';
+import SurprisedPikachu from '../Components/img/surprised_pikachu.jpg';
+import ColoredLed from './PokeDexDesignComponents/ColoredLeds';
+import Bars from './PokeDexDesignComponents/Bars';
 import IsLoading from '../Components/IsLoading/IsLoading';
 
 const PokeScreen = ({ match, history }) => {
@@ -13,20 +16,25 @@ const PokeScreen = ({ match, history }) => {
   const [loading, setLoading] = useState(true);
   const [pokemonDescription, setPokemonDescription] = useState('');
   const [barSkills, setBarSkills] = useState('');
-
+  const [pokemonTypes, setPokemonType] = useState([]);
   useEffect(() => {
     const fetchSpecificItem = async () => {
       const fetchItem = await axios.get(`https://pokeapi.co/api/v2/pokemon/${match.params.id}`);
       const item = await fetchItem.data;
-
+      console.log(item);
       const speciesFetch = await axios.get(item.species.url);
       const speciesData = speciesFetch.data;
       const description = speciesData.flavor_text_entries[9].flavor_text;
-      const itemStats = item.stats;
 
+      const itemStats = item.stats;
+      const itemTypes = item.types.map((item) => {
+        return item.type.name;
+      });
+      console.log(itemTypes);
       const skills = itemStats.map((item) => {
         return { type: item.stat.name, level: item.base_stat };
       });
+      setPokemonType(itemTypes);
       setPokemonDescription(description);
       setPokemon(item);
       setBarSkills(skills);
@@ -109,6 +117,11 @@ const PokeScreen = ({ match, history }) => {
           <h1 className="pokeScreen-name">
             {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
           </h1>
+          <div className="type-tags">
+            {pokemonTypes.map((item) => {
+              return <TypeTag type={item} key={item} />;
+            })}
+          </div>
           <h3 className="pokemonScreen-description">{pokemonDescription}</h3>
           <h3 className="pokeScreen-exp">Base Experience: {pokemon.base_experience}</h3>
           <h3 className="pokeScreen-height">

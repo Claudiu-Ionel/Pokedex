@@ -9,3 +9,9 @@
   max-width: 60%;
   margin-top: 50px;
 }
+
+@media only screen and (max-width: 376px) {
+  .pokemonList {
+    max-width: 400px;
+  }
+}

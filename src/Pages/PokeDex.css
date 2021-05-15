@@ -112,3 +112,42 @@
   padding: 0px 20px;
   width: fit-content;
 }
+
+@media only screen and (max-width: 376px) {
+  .beeboop-leds {
+    left: -40px;
+    top: -120px;
+  }
+  .screen-wrapper {
+    width: 250px;
+    height: 215px;
+  }
+
+  .screen {
+    width: 150px;
+    height: 115px;
+  }
+  .screen img {
+    max-width: 100px;
+  }
+
+  .vents-wrapper {
+    bottom: 10px;
+    right: 30px;
+  }
+  .bar {
+    width: 30px;
+    height: 5px;
+    margin-bottom: 5px;
+  }
+
+  .stats-wrapper {
+    width: 300px;
+  }
+  .pokemonScreen-description {
+    padding: 10px 20px;
+  }
+  .stats-wrapper h3 {
+    margin: 12px 0px;
+  }
+}

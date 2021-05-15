@@ -87,7 +87,10 @@ function PokemonData() {
           );
         })}
       </div>
-      <button style={{ padding: `10px` }} onClick={() => refetch(localPokemons.next)}>
+      <button
+        style={{ padding: `10px`, marginBottom: `10px` }}
+        onClick={() => refetch(localPokemons.next)}
+      >
         Load More
       </button>
     </>
