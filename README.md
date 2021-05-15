@@ -1,4 +1,11 @@
-# Getting Started with Create React App
+# PokeDex
+
+This is a web representation of the well known Pokemon Tool : The Pokedex! Users will firstly have access to 20 pokemons and the option to fetch another 20 new pokemons from the RESTful PokeApi. All the fetched data is locally cached , lowering the number of request on the server. The user can click on the Pokemon's card and then be redirected to a Stats page where they can se more information about it. 
+
+Hooks used in the Project : useState(), useEffect(), useContext(), useCallback().
+Libraries used : React Router, Axios.
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
