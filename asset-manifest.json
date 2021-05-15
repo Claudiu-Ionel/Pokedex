@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/Pokedex/static/css/main.165a20ed.chunk.css",
+    "main.js": "/Pokedex/static/js/main.a6ce4fba.chunk.js",
+    "main.js.map": "/Pokedex/static/js/main.a6ce4fba.chunk.js.map",
+    "runtime-main.js": "/Pokedex/static/js/runtime-main.c45fc253.js",
+    "runtime-main.js.map": "/Pokedex/static/js/runtime-main.c45fc253.js.map",
+    "static/js/2.d5412b79.chunk.js": "/Pokedex/static/js/2.d5412b79.chunk.js",
+    "static/js/2.d5412b79.chunk.js.map": "/Pokedex/static/js/2.d5412b79.chunk.js.map",
+    "static/js/3.a9054cf1.chunk.js": "/Pokedex/static/js/3.a9054cf1.chunk.js",
+    "static/js/3.a9054cf1.chunk.js.map": "/Pokedex/static/js/3.a9054cf1.chunk.js.map",
+    "index.html": "/Pokedex/index.html",
+    "static/css/main.165a20ed.chunk.css.map": "/Pokedex/static/css/main.165a20ed.chunk.css.map",
+    "static/js/2.d5412b79.chunk.js.LICENSE.txt": "/Pokedex/static/js/2.d5412b79.chunk.js.LICENSE.txt",
+    "static/media/surprised_pikachu.2226ec24.jpg": "/Pokedex/static/media/surprised_pikachu.2226ec24.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c45fc253.js",
+    "static/js/2.d5412b79.chunk.js",
+    "static/css/main.165a20ed.chunk.css",
+    "static/js/main.a6ce4fba.chunk.js"
+  ]
+}
