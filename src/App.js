@@ -27,7 +27,7 @@ function App() {
   return (
     <div className="App">
       <AppContext.Provider value={globalState}>
-        <Router basename="/pokedex">
+        <Router basename="/Pokedex">
           <Switch>
             <Route exact path="/" component={Homepage} />
             <Route exact path="/:id" component={PokeDex} />
