@@ -1,6 +1,6 @@
 {
   "homepage": "https://claudiu-ionel.github.io/Pokedex/",
-  "name": "my-app",
+  "name": "Pokedex",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
